@@ -1,0 +1,81 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Navbar styling */
+.navbar {
+  background-color: #bbbdbd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  color: #788687;
+  text-shadow: 2px 2px 4px #aaa;
+  font-weight: bold;
+}
+
+.nav-link {
+  color: #877978;
+}
+
+.nav-link:hover {
+  color: #7a7877;
+}
+
+/* Styling the body and html for a full-page gradient background */
+body, html {
+  background: #838080; /* fallback color */
+  background: linear-gradient(to bottom, #5b5b5b, #cdcccb);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  font-family: 'Baskervvillee SC', 'PT serif';
+  overflow: auto;
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+/* Table row styling for odd rows */
+table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+/* Heading elements styling */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Baskerville SC', 'PT serif';
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+caption {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Anchor elements styling */
+a {
+  color: #ffffff;
+}
+
+a:hover {
+  color: #232323;
+}
+
+/* Fieldset legends styling */
+legend {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: 'Baskervvillee SC', 'PT serif';
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #aaa;
+}
