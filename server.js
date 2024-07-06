@@ -1,13 +1,12 @@
 /*********************************************************************************
-*  WEB700 – Assignment 03
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
-*  of this assignment has been copied manually or electronically from any other source 
+*  WEB700 – Assignment 04
+*  I declare that this assignment is my own work in accordance with Seneca Academic Policy. 
+*  No part of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Toluwalase Olaniran Martins Student ID: 104360235 Date: 22/06/2024
-*
-********************************************************************************/ 
-
+*  Name: Toluwalase Olaniran Martins Student ID: 104360235 Date: 06/07/2024
+*  Online (vercel) Link: ________________________________________________________
+*********************************************************************************/
 
 var HTTP_PORT = process.env.PORT || 8080;
 var express = require("express");
@@ -19,44 +18,46 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/students", (req, res) => {
-    if (req.query.course) {
-        collegeData.getStudentsByCourse(req.query.course).then((data) => {
+// Define routes with try/catch blocks for error handling
+app.get("/students", async (req, res) => {
+    try {
+        if (req.query.course) {
+            const data = await collegeData.getStudentsByCourse(req.query.course);
             res.json(data);
-        }).catch((err) => {
-            res.json({ message: "no results" });
-        });
-    } else {
-        collegeData.getAllStudents().then((data) => {
+        } else {
+            const data = await collegeData.getAllStudents();
             res.json(data);
-        }).catch((err) => {
-            res.json({ message: "no results" });
-        });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error: " + err });
     }
 });
 
-app.get("/tas", (req, res) => {
-    collegeData.getTAs().then((data) => {
+app.get("/tas", async (req, res) => {
+    try {
+        const data = await collegeData.getTAs();
         res.json(data);
-    }).catch((err) => {
-        res.json({ message: "no results" });
-    });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error: " + err });
+    }
 });
 
-app.get("/courses", (req, res) => {
-    collegeData.getCourses().then((data) => {
+app.get("/courses", async (req, res) => {
+    try {
+        const data = await collegeData.getCourses();
         res.json(data);
-    }).catch((err) => {
-        res.json({ message: "no results" });
-    });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error: " + err });
+    }
 });
 
-app.get("/student/:num", (req, res) => {
-    collegeData.getStudentByNum(req.params.num).then((data) => {
+app.get("/student/:num", async (req, res) => {
+    try {
+        const data = await collegeData.getStudentByNum(req.params.num);
         res.json(data);
-    }).catch((err) => {
-        res.json({ message: "no results" });
-    });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error: " + err });
+    }
 });
 
 app.get("/", (req, res) => {
@@ -75,23 +76,24 @@ app.get("/students/add", (req, res) => {
     res.sendFile(path.join(__dirname, "/views/addStudent.html"));
 });
 
-app.post("/students/add", (req, res) => {
-    collegeData.addStudent(req.body).then(() => {
+app.post("/students/add", async (req, res) => {
+    try {
+        await collegeData.addStudent(req.body);
         res.redirect("/students");
-    }).catch((err) => {
-        res.json({ message: "Error adding student: " + err });
-    });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error: " + err });
+    }
 });
 
 app.use((req, res) => {
     res.status(404).send("Oops, looks like you are lost.");
 });
 
+// Start the server
 collegeData.initialize().then(() => {
     app.listen(HTTP_PORT, () => {
         console.log("server listening on port: " + HTTP_PORT);
     });
 }).catch((err) => {
-    console.log("Unable to start server: " + err);
+    console.error("Unable to start server: " + err);
 });
-
