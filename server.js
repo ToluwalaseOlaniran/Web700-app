@@ -15,6 +15,10 @@ var app = express();
 var path = require("path");
 var collegeData = require("./modules/collegeData");
 
+app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/students", (req, res) => {
     if (req.query.course) {
         collegeData.getStudentsByCourse(req.query.course).then((data) => {
@@ -65,6 +69,18 @@ app.get("/about", (req, res) => {
 
 app.get("/htmlDemo", (req, res) => {
     res.sendFile(path.join(__dirname, "/views/htmlDemo.html"));
+});
+
+app.get("/students/add", (req, res) => {
+    res.sendFile(path.join(__dirname, "/views/addStudent.html"));
+});
+
+app.post("/students/add", (req, res) => {
+    collegeData.addStudent(req.body).then(() => {
+        res.redirect("/students");
+    }).catch((err) => {
+        res.json({ message: "Error adding student: " + err });
+    });
 });
 
 app.use((req, res) => {
