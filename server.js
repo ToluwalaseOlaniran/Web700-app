@@ -14,8 +14,8 @@ var app = express();
 var path = require("path");
 var collegeData = require("./modules/collegeData");
 
-app.set('views', __dirname + '/views');
-app.use(express.static(__dirname + '/public'));
+app.set('views', path.join(__dirname, '/views'));
+app.use(express.static(path.join(__dirname, '/Public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Define routes with try/catch blocks for error handling
