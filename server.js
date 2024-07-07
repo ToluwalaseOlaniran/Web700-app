@@ -76,24 +76,4 @@ app.get("/students/add", (req, res) => {
     res.sendFile(path.join(__dirname, "/views/addStudent.html"));
 });
 
-app.post("/students/add", async (req, res) => {
-    try {
-        await collegeData.addStudent(req.body);
-        res.redirect("/students");
-    } catch (err) {
-        res.status(500).json({ message: "Internal Server Error: " + err });
-    }
-});
-
-app.use((req, res) => {
-    res.status(404).send("Oops, looks like you are lost.");
-});
-
-// Start the server
-collegeData.initialize().then(() => {
-    app.listen(HTTP_PORT, () => {
-        console.log("server listening on port: " + HTTP_PORT);
-    });
-}).catch((err) => {
-    console.error("Unable to start server: " + err);
-});
+app.post("/students/add", async (req
