@@ -3118,5 +3118,17 @@
     "TA": false,
     "status": "Part Time",
     "course": 5
+  },
+  {
+    "firstName": "Toluwalase",
+    "lastName": "Olaniran",
+    "email": "olaniranmartins@yahoo.com",
+    "Street": "43 freyw ",
+    "City": "dghdnd",
+    "Province": "on",
+    "status": "Full Time",
+    "course": "5",
+    "TA": false,
+    "studentNum": 261
   }
 ]

@@ -38,24 +38,6 @@ module.exports.getAllStudents = function(){
     })
 }
 
-module.exports.getTAs = function () {
-    return new Promise(function (resolve, reject) {
-        var filteredStudents = [];
-
-        for (let i = 0; i < dataCollection.students.length; i++) {
-            if (dataCollection.students[i].TA == true) {
-                filteredStudents.push(dataCollection.students[i]);
-            }
-        }
-
-        if (filteredStudents.length == 0) {
-            reject("query returned 0 results"); return;
-        }
-
-        resolve(filteredStudents);
-    });
-};
-
 module.exports.getCourses = function(){
    return new Promise((resolve,reject)=>{
     if (dataCollection.courses.length == 0) {
@@ -118,5 +100,30 @@ module.exports.addStudent = function (studentData) {
                 resolve();
             }
         });
+    });
+};
+
+module.exports.getCourseById = function (id) {
+    return new Promise((resolve, reject) => {
+        const course = dataCollection.courses.find(c => c.courseId == id);
+        if (course) {
+            resolve(course);
+        } else {
+            reject("query returned 0 results");
+        }
+    });
+};
+
+module.exports.updateStudent = function (studentData) {
+    return new Promise((resolve, reject) => {
+        const index = dataCollection.students.findIndex(s => s.studentNum == studentData.studentNum);
+        if (index !== -1) {
+            // Update student information, ensure TA checkbox is correctly handled
+            studentData.TA = !!studentData.TA; // Convert to boolean
+            dataCollection.students[index] = { ...dataCollection.students[index], ...studentData };
+            resolve();
+        } else {
+            reject("Student not found");
+        }
     });
 };
